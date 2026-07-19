@@ -9,12 +9,9 @@ import {
 import React, { useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { router } from "expo-router";
-import { useNavigation, DrawerActions } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme } from "../../../context/ThemeContext";
 
 const Survey = () => {
-  const navigation = useNavigation();
   const { theme } = useTheme();
   const [siteName, setSiteName] = useState("");
   const [clientName, setClientName] = useState("");
@@ -48,16 +45,7 @@ const Survey = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-          <Ionicons name="menu" size={30} color={theme.colors.text} />
-        </TouchableOpacity>
-
-        <Text style={[styles.heading, { color: theme.colors.text }]}>Create Survey</Text>
-
-        <Ionicons name="person-circle" size={35} color={theme.colors.primary} />
-      </View>
+      <Text style={[styles.heading, { color: theme.colors.text }]}>Create Survey</Text>
 
       <TextInput
         placeholder="Site Name"
@@ -153,19 +141,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-  },
-
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 40,
-    marginBottom: 20,
+    marginTop: 20,
   },
 
   heading: {
-    fontSize: 22,
+    fontSize: 28,
     fontWeight: "bold",
+    marginBottom: 25,
+    textAlign: "center",
   },
 
   input: {

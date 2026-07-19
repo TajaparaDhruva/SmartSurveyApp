@@ -8,12 +8,9 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { useNavigation, DrawerActions } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme } from "../../../context/ThemeContext";
 
 const History = () => {
-  const navigation = useNavigation();
   const { theme } = useTheme();
   const [surveys, setSurveys] = useState([
     {
@@ -108,16 +105,7 @@ const History = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-          <Ionicons name="menu" size={30} color={theme.colors.text} />
-        </TouchableOpacity>
-
-        <Text style={[styles.heading, { color: theme.colors.text }]}>Survey History</Text>
-
-        <Ionicons name="person-circle" size={35} color={theme.colors.primary} />
-      </View>
+      <Text style={[styles.heading, { color: theme.colors.text }]}>Survey History</Text>
 
       <TextInput
         style={[styles.search, { backgroundColor: theme.colors.inputBg, color: theme.colors.text, borderColor: theme.colors.border }]}
@@ -170,19 +158,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
-  },
-
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 40,
-    marginBottom: 15,
+    marginTop: 20,
   },
 
   heading: {
-    fontSize: 22,
+    fontSize: 28,
     fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 20,
   },
 
   search: {
