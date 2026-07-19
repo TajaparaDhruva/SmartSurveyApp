@@ -1,0 +1,222 @@
+import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+  RefreshControl,
+  Alert,
+} from "react-native";
+import * as Contacts from "expo-contacts";
+import * as Clipboard from "expo-clipboard";
+
+const ContactsScreen = () => {
+  const [contacts, setContacts] = useState([]);
+  const [filteredContacts, setFilteredContacts] = useState([]);
+  const [search, setSearch] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    getContacts();
+  }, []);
+
+  const getContacts = async () => {
+    const { status } = await Contacts.requestPermissionsAsync();
+
+    if (status !== "granted") {
+      Alert.alert("Permission Denied", "Contacts permission is required.");
+      return;
+    }
+
+    const { data } = await Contacts.getContactsAsync({
+      fields: [Contacts.Fields.PhoneNumbers],
+    });
+
+    setContacts(data);
+    setFilteredContacts(data);
+  };
+
+  const handleSearch = (text) => {
+    setSearch(text);
+
+    const result = contacts.filter((item) =>
+      item.name.toLowerCase().includes(text.toLowerCase())
+    );
+
+    setFilteredContacts(result);
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await getContacts();
+    setRefreshing(false);
+  };
+
+  const copyNumber = async (number) => {
+    if (!number) {
+      Alert.alert("No Number Available");
+      return;
+    }
+
+    await Clipboard.setStringAsync(number);
+
+    Alert.alert("Success", "Contact number copied.");
+  };
+
+  const renderItem = ({ item }) => {
+    const phone =
+      item.phoneNumbers && item.phoneNumbers.length > 0
+        ? item.phoneNumbers[0].number
+        : null;
+
+    return (
+      <View style={styles.card}>
+        <View style={styles.avatar}>
+          <Text style={styles.avatarText}>
+            {item.name ? item.name.charAt(0).toUpperCase() : "?"}
+          </Text>
+        </View>
+
+        <View style={{ flex: 1 }}>
+          <Text style={styles.name}>{item.name}</Text>
+
+          <Text style={styles.number}>
+            {phone ? phone : "No Number"}
+          </Text>
+        </View>
+
+        <TouchableOpacity
+          style={styles.copyBtn}
+          onPress={() => copyNumber(phone)}
+        >
+          <Text style={{ color: "#fff" }}>Copy</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+
+      <Text style={styles.heading}>Contacts</Text>
+
+      <Text style={styles.counter}>
+        Total Contacts : {filteredContacts.length}
+      </Text>
+
+      <TextInput
+        placeholder="Search Contact..."
+        style={styles.search}
+        value={search}
+        onChangeText={handleSearch}
+      />
+
+      {filteredContacts.length === 0 ? (
+        <View style={styles.empty}>
+          <Text style={styles.emptyText}>No Contacts Found</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={filteredContacts}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
+        />
+      )}
+    </View>
+  );
+};
+
+export default ContactsScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F5F7FA",
+    padding: 15,
+  },
+
+  heading: {
+    fontSize: 28,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+
+  counter: {
+    textAlign: "center",
+    marginBottom: 15,
+    fontSize: 16,
+    color: "#555",
+  },
+
+  search: {
+    backgroundColor: "#fff",
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 15,
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
+
+  card: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 12,
+    borderRadius: 12,
+    marginBottom: 10,
+    elevation: 2,
+  },
+
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: "#2563EB",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 12,
+  },
+
+  avatarText: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+
+  name: {
+    fontSize: 17,
+    fontWeight: "bold",
+  },
+
+  number: {
+    color: "gray",
+    marginTop: 3,
+  },
+
+  copyBtn: {
+    backgroundColor: "#22C55E",
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+
+  empty: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  emptyText: {
+    fontSize: 20,
+    color: "gray",
+  },
+});
