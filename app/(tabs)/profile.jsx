@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableOpacity,
   Alert,
 } from "react-native";
@@ -30,13 +29,6 @@ const Profile = () => {
 
   return (
     <View style={styles.container}>
-
-      <Image
-        source={{
-          uri: "https://i.pravatar.cc/200",
-        }}
-        style={styles.image}
-      />
 
       <Text style={styles.name}>
         Dhruva Tajapara
@@ -80,13 +72,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
-  },
-
-  image: {
-    width: 140,
-    height: 140,
-    borderRadius: 70,
-    marginBottom: 20,
   },
 
   name: {

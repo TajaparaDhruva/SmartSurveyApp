@@ -16,7 +16,7 @@ const Dashboard = () => {
       {/* Header */}
 
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("/(drawer)/camera")}>
           <Ionicons name="menu" size={30} color="black" />
         </TouchableOpacity>
 
