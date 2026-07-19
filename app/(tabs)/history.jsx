@@ -116,7 +116,7 @@ const History = () => {
 
         <Text style={[styles.heading, { color: theme.colors.text }]}>Survey History</Text>
 
-        <View style={{ width: 30 }} />
+        <Ionicons name="person-circle" size={35} color={theme.colors.primary} />
       </View>
 
       <TextInput

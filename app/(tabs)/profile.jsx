@@ -42,7 +42,7 @@ const Profile = () => {
 
         <Text style={[styles.heading, { color: theme.colors.text }]}>My Profile</Text>
 
-        <View style={{ width: 30 }} />
+        <Ionicons name="person-circle" size={35} color={theme.colors.primary} />
       </View>
 
       <View style={styles.body}>
