@@ -8,8 +8,10 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { router } from "expo-router";
+import { useTheme } from "../context/ThemeContext";
 
 const Login = () => {
+  const { theme } = useTheme();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,33 +21,35 @@ const Login = () => {
       return;
     }
 
-    router.replace("/(tabs)");
+    router.replace("/(drawer)");
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Text style={styles.logo}>📋</Text>
 
-      <Text style={styles.title}>Smart Survey App</Text>
+      <Text style={[styles.title, { color: theme.colors.text }]}>Smart Survey App</Text>
 
-      <Text style={styles.subtitle}>Welcome Back</Text>
+      <Text style={[styles.subtitle, { color: theme.colors.subtext }]}>Welcome Back</Text>
 
       <TextInput
         placeholder="Username"
-        style={styles.input}
+        placeholderTextColor={theme.colors.subtext}
+        style={[styles.input, { backgroundColor: theme.colors.inputBg, color: theme.colors.text, borderColor: theme.colors.border }]}
         value={username}
         onChangeText={setUsername}
       />
 
       <TextInput
         placeholder="Password"
+        placeholderTextColor={theme.colors.subtext}
         secureTextEntry
-        style={styles.input}
+        style={[styles.input, { backgroundColor: theme.colors.inputBg, color: theme.colors.text, borderColor: theme.colors.border }]}
         value={password}
         onChangeText={setPassword}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <TouchableOpacity style={[styles.button, { backgroundColor: theme.colors.primary }]} onPress={handleLogin}>
         <Text style={styles.btnText}>Login</Text>
       </TouchableOpacity>
     </View>
@@ -59,7 +63,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     padding: 25,
-    backgroundColor: "#F5F7FA",
   },
 
   logo: {
@@ -76,22 +79,18 @@ const styles = StyleSheet.create({
 
   subtitle: {
     textAlign: "center",
-    color: "gray",
     marginBottom: 30,
     fontSize: 16,
   },
 
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
     borderRadius: 10,
     padding: 15,
     marginBottom: 15,
-    backgroundColor: "white",
   },
 
   button: {
-    backgroundColor: "#2563EB",
     padding: 15,
     borderRadius: 10,
     marginTop: 10,

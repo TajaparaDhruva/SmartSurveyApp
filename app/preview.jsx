@@ -8,8 +8,10 @@ import {
   Alert,
 } from "react-native";
 import { router } from "expo-router";
+import { useTheme } from "../context/ThemeContext";
 
 const Preview = () => {
+  const { theme } = useTheme();
   const survey = {
     siteName: "ABC Company",
     clientName: "John Doe",
@@ -28,42 +30,42 @@ const Preview = () => {
       "Your survey has been submitted successfully."
     );
 
-    router.replace("/(tabs)/history");
+    router.replace("/(drawer)/(tabs)/history");
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Survey Preview</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.heading, { color: theme.colors.text }]}>Survey Preview</Text>
 
       <Image
         source={{ uri: survey.photo }}
         style={styles.image}
       />
 
-      <View style={styles.card}>
+      <View style={[styles.card, { backgroundColor: theme.colors.card }]}>
         <Text style={styles.label}>Site Name</Text>
-        <Text style={styles.value}>{survey.siteName}</Text>
+        <Text style={[styles.value, { color: theme.colors.text }]}>{survey.siteName}</Text>
 
         <Text style={styles.label}>Client Name</Text>
-        <Text style={styles.value}>{survey.clientName}</Text>
+        <Text style={[styles.value, { color: theme.colors.text }]}>{survey.clientName}</Text>
 
         <Text style={styles.label}>Description</Text>
-        <Text style={styles.value}>{survey.description}</Text>
+        <Text style={[styles.value, { color: theme.colors.text }]}>{survey.description}</Text>
 
         <Text style={styles.label}>Priority</Text>
-        <Text style={styles.value}>{survey.priority}</Text>
+        <Text style={[styles.value, { color: theme.colors.text }]}>{survey.priority}</Text>
 
         <Text style={styles.label}>Date</Text>
-        <Text style={styles.value}>{survey.date}</Text>
+        <Text style={[styles.value, { color: theme.colors.text }]}>{survey.date}</Text>
 
         <Text style={styles.label}>Location</Text>
-        <Text style={styles.value}>{survey.location}</Text>
+        <Text style={[styles.value, { color: theme.colors.text }]}>{survey.location}</Text>
 
         <Text style={styles.label}>Contact</Text>
-        <Text style={styles.value}>{survey.contact}</Text>
+        <Text style={[styles.value, { color: theme.colors.text }]}>{survey.contact}</Text>
 
         <Text style={styles.label}>Notes</Text>
-        <Text style={styles.value}>{survey.notes}</Text>
+        <Text style={[styles.value, { color: theme.colors.text }]}>{survey.notes}</Text>
       </View>
 
       <TouchableOpacity
@@ -88,8 +90,8 @@ export default Preview;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F7FA",
     padding: 20,
+    marginTop: 20,
   },
 
   heading: {
@@ -101,13 +103,12 @@ const styles = StyleSheet.create({
 
   image: {
     width: "100%",
-    height: 220,
+    height: 180,
     borderRadius: 12,
     marginBottom: 20,
   },
 
   card: {
-    backgroundColor: "#fff",
     padding: 15,
     borderRadius: 12,
     elevation: 3,

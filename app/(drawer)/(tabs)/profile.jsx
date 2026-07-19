@@ -7,8 +7,10 @@ import {
   Alert,
 } from "react-native";
 import { router } from "expo-router";
+import { useTheme } from "../../../context/ThemeContext";
 
 const Profile = () => {
+  const { theme } = useTheme();
 
   const handleLogout = () => {
     Alert.alert(
@@ -28,25 +30,25 @@ const Profile = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
 
-      <Text style={styles.name}>
+      <Text style={[styles.name, { color: theme.colors.text }]}>
         Dhruva Tajapara
       </Text>
 
-      <Text style={styles.detail}>
+      <Text style={[styles.detail, { color: theme.colors.subtext }]}>
         🎓 Computer Engineering Student
       </Text>
 
-      <Text style={styles.detail}>
+      <Text style={[styles.detail, { color: theme.colors.subtext }]}>
         🏫 Swaminarayan University
       </Text>
 
-      <Text style={styles.detail}>
+      <Text style={[styles.detail, { color: theme.colors.subtext }]}>
         📧 dhruva@gmail.com
       </Text>
 
-      <Text style={styles.detail}>
+      <Text style={[styles.detail, { color: theme.colors.subtext }]}>
         📱 +91 9876543210
       </Text>
 
@@ -68,7 +70,6 @@ export default Profile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F7FA",
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
@@ -83,7 +84,6 @@ const styles = StyleSheet.create({
   detail: {
     fontSize: 18,
     marginBottom: 12,
-    color: "#555",
   },
 
   logoutButton: {

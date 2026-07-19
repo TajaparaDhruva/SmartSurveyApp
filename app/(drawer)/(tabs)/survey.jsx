@@ -9,8 +9,10 @@ import {
 import React, { useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { router } from "expo-router";
+import { useTheme } from "../../../context/ThemeContext";
 
 const Survey = () => {
+  const { theme } = useTheme();
   const [siteName, setSiteName] = useState("");
   const [clientName, setClientName] = useState("");
   const [description, setDescription] = useState("");
@@ -42,70 +44,76 @@ const Survey = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Create Survey</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.heading, { color: theme.colors.text }]}>Create Survey</Text>
 
       <TextInput
         placeholder="Site Name"
-        style={styles.input}
+        placeholderTextColor={theme.colors.subtext}
+        style={[styles.input, { backgroundColor: theme.colors.inputBg, color: theme.colors.text, borderColor: theme.colors.border }]}
         value={siteName}
         onChangeText={setSiteName}
       />
 
       <TextInput
         placeholder="Client Name"
-        style={styles.input}
+        placeholderTextColor={theme.colors.subtext}
+        style={[styles.input, { backgroundColor: theme.colors.inputBg, color: theme.colors.text, borderColor: theme.colors.border }]}
         value={clientName}
         onChangeText={setClientName}
       />
 
       <TextInput
         placeholder="Description"
-        style={[styles.input, { height: 100 }]}
+        placeholderTextColor={theme.colors.subtext}
+        style={[styles.input, { backgroundColor: theme.colors.inputBg, color: theme.colors.text, borderColor: theme.colors.border, height: 100 }]}
         multiline
         value={description}
         onChangeText={setDescription}
       />
 
-      <Text style={styles.label}>Priority</Text>
+      <Text style={[styles.label, { color: theme.colors.text }]}>Priority</Text>
 
       <View style={styles.priorityContainer}>
         <TouchableOpacity
           style={[
             styles.priorityButton,
-            priority === "High" && styles.selected,
+            { backgroundColor: theme.colors.card, borderColor: theme.colors.border },
+            priority === "High" && { backgroundColor: theme.colors.primary },
           ]}
           onPress={() => setPriority("High")}
         >
-          <Text>High</Text>
+          <Text style={{ color: priority === "High" ? "white" : theme.colors.text }}>High</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[
             styles.priorityButton,
-            priority === "Medium" && styles.selected,
+            { backgroundColor: theme.colors.card, borderColor: theme.colors.border },
+            priority === "Medium" && { backgroundColor: theme.colors.primary },
           ]}
           onPress={() => setPriority("Medium")}
         >
-          <Text>Medium</Text>
+          <Text style={{ color: priority === "Medium" ? "white" : theme.colors.text }}>Medium</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[
             styles.priorityButton,
-            priority === "Low" && styles.selected,
+            { backgroundColor: theme.colors.card, borderColor: theme.colors.border },
+            priority === "Low" && { backgroundColor: theme.colors.primary },
           ]}
           onPress={() => setPriority("Low")}
         >
-          <Text>Low</Text>
+          <Text style={{ color: priority === "Low" ? "white" : theme.colors.text }}>Low</Text>
         </TouchableOpacity>
       </View>
 
       <TouchableOpacity
-        style={styles.dateButton}
+        style={[styles.dateButton, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}
         onPress={() => setShow(true)}
       >
-        <Text>{date.toDateString()}</Text>
+        <Text style={{ color: theme.colors.text }}>{date.toDateString()}</Text>
       </TouchableOpacity>
 
       {show && (
@@ -117,7 +125,10 @@ const Survey = () => {
         />
       )}
 
-      <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
+      <TouchableOpacity
+        style={[styles.nextButton, { backgroundColor: theme.colors.primary }]}
+        onPress={handleNext}
+      >
         <Text style={styles.nextText}>Next</Text>
       </TouchableOpacity>
     </View>
@@ -129,8 +140,8 @@ export default Survey;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F7FA",
     padding: 20,
+    marginTop: 20,
   },
 
   heading: {
@@ -141,12 +152,10 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    backgroundColor: "white",
     borderRadius: 10,
     padding: 15,
     marginBottom: 15,
     borderWidth: 1,
-    borderColor: "#ddd",
   },
 
   label: {
@@ -164,29 +173,20 @@ const styles = StyleSheet.create({
   priorityButton: {
     width: "30%",
     padding: 15,
-    backgroundColor: "white",
     alignItems: "center",
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#ddd",
-  },
-
-  selected: {
-    backgroundColor: "#2563EB",
   },
 
   dateButton: {
-    backgroundColor: "white",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
     marginBottom: 25,
     borderWidth: 1,
-    borderColor: "#ddd",
   },
 
   nextButton: {
-    backgroundColor: "#2563EB",
     padding: 18,
     borderRadius: 10,
   },

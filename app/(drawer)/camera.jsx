@@ -10,7 +10,10 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { CameraView, useCameraPermissions } from "expo-camera";
 
+import { useTheme } from "../../context/ThemeContext";
+
 const CameraScreen = () => {
+  const { theme } = useTheme();
   const [permission, requestPermission] = useCameraPermissions();
   const cameraRef = useRef(null);
 
@@ -32,8 +35,8 @@ const CameraScreen = () => {
 
   if (!permission.granted) {
     return (
-      <View style={styles.center}>
-        <Text style={styles.permissionText}>
+      <View style={[styles.center, { backgroundColor: theme.colors.background }]}>
+        <Text style={[styles.permissionText, { color: theme.colors.text }]}>
           Camera permission is required.
         </Text>
 
@@ -78,24 +81,24 @@ const CameraScreen = () => {
 
   if (loading) {
     return (
-      <View style={styles.center}>
+      <View style={[styles.center, { backgroundColor: theme.colors.background }]}>
         <ActivityIndicator size="large" color="#2563EB" />
-        <Text>Opening Camera...</Text>
+        <Text style={{ color: theme.colors.text, marginTop: 10 }}>Opening Camera...</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {photo ? (
         <>
           <Image source={{ uri: photo }} style={styles.image} />
 
-          <Text style={styles.time}>
+          <Text style={[styles.time, { color: theme.colors.text }]}>
             Captured At:
           </Text>
 
-          <Text>{captureTime}</Text>
+          <Text style={{ color: theme.colors.text }}>{captureTime}</Text>
 
           <TouchableOpacity
             style={styles.button}

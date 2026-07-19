@@ -8,9 +8,10 @@ import {
   Alert,
 } from "react-native";
 import { router } from "expo-router";
+import { useTheme } from "../../context/ThemeContext";
 
 const Settings = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const { isDarkMode, toggleDarkMode, theme } = useTheme();
   const [notification, setNotification] = useState(true);
 
   const handleAbout = () => {
@@ -38,36 +39,39 @@ const Settings = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Settings</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.heading, { color: theme.colors.text }]}>Settings</Text>
 
-      <View style={styles.card}>
-        <Text style={styles.text}>Dark Mode</Text>
+      <View style={[styles.card, { backgroundColor: theme.colors.card }]}>
+        <Text style={[styles.text, { color: theme.colors.text }]}>Dark Mode</Text>
 
         <Switch
-          value={darkMode}
-          onValueChange={setDarkMode}
+          value={isDarkMode}
+          onValueChange={toggleDarkMode}
+          trackColor={{ false: "#767577", true: theme.colors.primary }}
+          thumbColor={isDarkMode ? "#FFFFFF" : "#f4f3f4"}
         />
       </View>
 
-      <View style={styles.card}>
-        <Text style={styles.text}>Notifications</Text>
+      <View style={[styles.card, { backgroundColor: theme.colors.card }]}>
+        <Text style={[styles.text, { color: theme.colors.text }]}>Notifications</Text>
 
         <Switch
           value={notification}
           onValueChange={setNotification}
+          trackColor={{ false: "#767577", true: theme.colors.primary }}
         />
       </View>
 
       <TouchableOpacity
-        style={styles.card}
+        style={[styles.card, { backgroundColor: theme.colors.card }]}
         onPress={handleAbout}
       >
-        <Text style={styles.text}>About App</Text>
+        <Text style={[styles.text, { color: theme.colors.text }]}>About App</Text>
       </TouchableOpacity>
 
-      <View style={styles.card}>
-        <Text style={styles.text}>
+      <View style={[styles.card, { backgroundColor: theme.colors.card }]}>
+        <Text style={[styles.text, { color: theme.colors.text }]}>
           App Version : 1.0.0
         </Text>
       </View>
@@ -89,7 +93,6 @@ export default Settings;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F7FA",
     padding: 20,
   },
 
@@ -101,7 +104,6 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "#fff",
     padding: 18,
     borderRadius: 12,
     marginBottom: 15,

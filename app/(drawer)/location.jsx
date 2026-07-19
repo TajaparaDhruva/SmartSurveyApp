@@ -8,8 +8,10 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import * as Clipboard from "expo-clipboard";
+import { useTheme } from "../../context/ThemeContext";
 
 const LocationScreen = () => {
+  const { theme } = useTheme();
   const [location, setLocation] = useState(null);
 
   const getLocation = async () => {
@@ -33,8 +35,7 @@ const LocationScreen = () => {
       return;
     }
 
-    const text = `Latitude: ${location.latitude}
-Longitude: ${location.longitude}`;
+    const text = `Latitude: ${location.latitude}\nLongitude: ${location.longitude}`;
 
     await Clipboard.setStringAsync(text);
 
@@ -42,31 +43,31 @@ Longitude: ${location.longitude}`;
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Current Location</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.heading, { color: theme.colors.text }]}>Current Location</Text>
 
       {location ? (
-        <View style={styles.card}>
-          <Text style={styles.text}>
+        <View style={[styles.card, { backgroundColor: theme.colors.card }]}>
+          <Text style={[styles.text, { color: theme.colors.text }]}>
             Latitude : {location.latitude}
           </Text>
 
-          <Text style={styles.text}>
+          <Text style={[styles.text, { color: theme.colors.text }]}>
             Longitude : {location.longitude}
           </Text>
 
-          <Text style={styles.text}>
+          <Text style={[styles.text, { color: theme.colors.text }]}>
             Accuracy : {location.accuracy} meters
           </Text>
         </View>
       ) : (
-        <Text style={styles.noLocation}>
+        <Text style={[styles.noLocation, { color: theme.colors.subtext }]}>
           No Location Available
         </Text>
       )}
 
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, { backgroundColor: theme.colors.primary }]}
         onPress={getLocation}
       >
         <Text style={styles.buttonText}>
@@ -75,7 +76,7 @@ Longitude: ${location.longitude}`;
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, { backgroundColor: theme.colors.primary }]}
         onPress={getLocation}
       >
         <Text style={styles.buttonText}>
@@ -101,7 +102,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#F5F7FA",
   },
 
   heading: {
@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "#fff",
     padding: 20,
     borderRadius: 12,
     elevation: 3,
@@ -127,12 +126,10 @@ const styles = StyleSheet.create({
   noLocation: {
     textAlign: "center",
     fontSize: 18,
-    color: "gray",
     marginBottom: 20,
   },
 
   button: {
-    backgroundColor: "#2563EB",
     padding: 15,
     borderRadius: 10,
     marginBottom: 15,

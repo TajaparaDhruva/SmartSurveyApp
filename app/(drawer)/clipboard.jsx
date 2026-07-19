@@ -8,8 +8,10 @@ import {
   Alert,
 } from "react-native";
 import * as Clipboard from "expo-clipboard";
+import { useTheme } from "../../context/ThemeContext";
 
 const ClipboardScreen = () => {
+  const { theme } = useTheme();
   const [notes, setNotes] = useState("");
 
   const surveyId = "SURVEY-1001";
@@ -33,25 +35,25 @@ const ClipboardScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Clipboard</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.heading, { color: theme.colors.text }]}>Clipboard</Text>
 
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, { backgroundColor: theme.colors.primary }]}
         onPress={() => copyText(surveyId, "Survey ID copied")}
       >
         <Text style={styles.buttonText}>Copy Survey ID</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, { backgroundColor: theme.colors.primary }]}
         onPress={() => copyText(contactNumber, "Contact Number copied")}
       >
         <Text style={styles.buttonText}>Copy Contact Number</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, { backgroundColor: theme.colors.primary }]}
         onPress={() => copyText(location, "Location copied")}
       >
         <Text style={styles.buttonText}>Copy Current Location</Text>
@@ -65,8 +67,9 @@ const ClipboardScreen = () => {
       </TouchableOpacity>
 
       <TextInput
-        style={styles.input}
+        style={[styles.input, { backgroundColor: theme.colors.inputBg, color: theme.colors.text, borderColor: theme.colors.border }]}
         placeholder="Pasted Notes..."
+        placeholderTextColor={theme.colors.subtext}
         multiline
         value={notes}
         onChangeText={setNotes}
@@ -88,7 +91,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#F5F7FA",
   },
 
   heading: {
@@ -99,7 +101,6 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#2563EB",
     padding: 15,
     borderRadius: 10,
     marginBottom: 15,
@@ -129,10 +130,8 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    backgroundColor: "#fff",
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#ddd",
     padding: 15,
     minHeight: 120,
     textAlignVertical: "top",

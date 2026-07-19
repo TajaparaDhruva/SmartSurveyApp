@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import { useTheme } from "../../../context/ThemeContext";
 
 const History = () => {
+  const { theme } = useTheme();
   const [surveys, setSurveys] = useState([
     {
       id: "1",
@@ -71,24 +73,20 @@ const History = () => {
   });
 
   const renderItem = ({ item }) => (
-    <View style={styles.card}>
-      <Text style={styles.title}>{item.site}</Text>
+    <View style={[styles.card, { backgroundColor: theme.colors.card }]}>
+      <Text style={[styles.title, { color: theme.colors.text }]}>{item.site}</Text>
 
-      <Text>Client : {item.client}</Text>
+      <Text style={{ color: theme.colors.text, marginBottom: 4 }}>Client : {item.client}</Text>
 
-      <Text>Priority : {item.priority}</Text>
+      <Text style={{ color: theme.colors.text }}>Priority : {item.priority}</Text>
 
       <View style={styles.buttonRow}>
         <TouchableOpacity
-          style={styles.viewButton}
+          style={[styles.viewButton, { backgroundColor: theme.colors.primary }]}
           onPress={() =>
             Alert.alert(
               "Survey Details",
-              `Site : ${item.site}
-
-Client : ${item.client}
-
-Priority : ${item.priority}`
+              `Site : ${item.site}\n\nClient : ${item.client}\n\nPriority : ${item.priority}`
             )
           }
         >
@@ -106,12 +104,13 @@ Priority : ${item.priority}`
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Survey History</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.heading, { color: theme.colors.text }]}>Survey History</Text>
 
       <TextInput
-        style={styles.search}
+        style={[styles.search, { backgroundColor: theme.colors.inputBg, color: theme.colors.text, borderColor: theme.colors.border }]}
         placeholder="Search Survey..."
+        placeholderTextColor={theme.colors.subtext}
         value={search}
         onChangeText={setSearch}
       />
@@ -122,13 +121,14 @@ Priority : ${item.priority}`
             key={item}
             style={[
               styles.filterButton,
-              filter === item && styles.activeFilter,
+              { backgroundColor: theme.colors.card, borderColor: theme.colors.border },
+              filter === item && { backgroundColor: theme.colors.primary },
             ]}
             onPress={() => setFilter(item)}
           >
             <Text
               style={{
-                color: filter === item ? "#fff" : "#000",
+                color: filter === item ? "#fff" : theme.colors.text,
                 fontWeight: "bold",
               }}
             >
@@ -143,7 +143,7 @@ Priority : ${item.priority}`
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         ListEmptyComponent={
-          <Text style={styles.empty}>
+          <Text style={[styles.empty, { color: theme.colors.subtext }]}>
             No Survey Found
           </Text>
         }
@@ -157,8 +157,8 @@ export default History;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F7FA",
     padding: 15,
+    marginTop: 20,
   },
 
   heading: {
@@ -169,9 +169,7 @@ const styles = StyleSheet.create({
   },
 
   search: {
-    backgroundColor: "#fff",
     borderWidth: 1,
-    borderColor: "#ddd",
     borderRadius: 10,
     padding: 12,
     marginBottom: 15,
@@ -184,20 +182,13 @@ const styles = StyleSheet.create({
   },
 
   filterButton: {
-    backgroundColor: "#fff",
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#ddd",
-  },
-
-  activeFilter: {
-    backgroundColor: "#2563EB",
   },
 
   card: {
-    backgroundColor: "#fff",
     padding: 15,
     borderRadius: 12,
     marginBottom: 15,
@@ -217,7 +208,6 @@ const styles = StyleSheet.create({
   },
 
   viewButton: {
-    backgroundColor: "#2563EB",
     paddingVertical: 10,
     paddingHorizontal: 25,
     borderRadius: 8,
@@ -239,6 +229,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     marginTop: 50,
-    color: "gray",
   },
 });

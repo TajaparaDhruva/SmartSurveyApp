@@ -11,8 +11,10 @@ import {
 } from "react-native";
 import * as Contacts from "expo-contacts";
 import * as Clipboard from "expo-clipboard";
+import { useTheme } from "../../context/ThemeContext";
 
 const ContactsScreen = () => {
+  const { theme } = useTheme();
   const [contacts, setContacts] = useState([]);
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [search, setSearch] = useState("");
@@ -72,17 +74,17 @@ const ContactsScreen = () => {
         : null;
 
     return (
-      <View style={styles.card}>
-        <View style={styles.avatar}>
+      <View style={[styles.card, { backgroundColor: theme.colors.card }]}>
+        <View style={[styles.avatar, { backgroundColor: theme.colors.primary }]}>
           <Text style={styles.avatarText}>
             {item.name ? item.name.charAt(0).toUpperCase() : "?"}
           </Text>
         </View>
 
         <View style={{ flex: 1 }}>
-          <Text style={styles.name}>{item.name}</Text>
+          <Text style={[styles.name, { color: theme.colors.text }]}>{item.name}</Text>
 
-          <Text style={styles.number}>
+          <Text style={[styles.number, { color: theme.colors.subtext }]}>
             {phone ? phone : "No Number"}
           </Text>
         </View>
@@ -98,24 +100,25 @@ const ContactsScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
 
-      <Text style={styles.heading}>Contacts</Text>
+      <Text style={[styles.heading, { color: theme.colors.text }]}>Contacts</Text>
 
-      <Text style={styles.counter}>
+      <Text style={[styles.counter, { color: theme.colors.subtext }]}>
         Total Contacts : {filteredContacts.length}
       </Text>
 
       <TextInput
         placeholder="Search Contact..."
-        style={styles.search}
+        placeholderTextColor={theme.colors.subtext}
+        style={[styles.search, { backgroundColor: theme.colors.inputBg, color: theme.colors.text, borderColor: theme.colors.border }]}
         value={search}
         onChangeText={handleSearch}
       />
 
       {filteredContacts.length === 0 ? (
         <View style={styles.empty}>
-          <Text style={styles.emptyText}>No Contacts Found</Text>
+          <Text style={[styles.emptyText, { color: theme.colors.subtext }]}>No Contacts Found</Text>
         </View>
       ) : (
         <FlatList
@@ -139,7 +142,6 @@ export default ContactsScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F7FA",
     padding: 15,
   },
 
@@ -154,22 +156,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 15,
     fontSize: 16,
-    color: "#555",
   },
 
   search: {
-    backgroundColor: "#fff",
     padding: 12,
     borderRadius: 10,
     marginBottom: 15,
     borderWidth: 1,
-    borderColor: "#ddd",
   },
 
   card: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
     padding: 12,
     borderRadius: 12,
     marginBottom: 10,
@@ -180,7 +178,6 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: "#2563EB",
     justifyContent: "center",
     alignItems: "center",
     marginRight: 12,
@@ -198,7 +195,6 @@ const styles = StyleSheet.create({
   },
 
   number: {
-    color: "gray",
     marginTop: 3,
   },
 
@@ -217,6 +213,5 @@ const styles = StyleSheet.create({
 
   emptyText: {
     fontSize: 20,
-    color: "gray",
   },
 });
