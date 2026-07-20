@@ -5,86 +5,106 @@ import {
   View,
   Switch,
   TouchableOpacity,
-  Alert,
+  ScrollView,
 } from "react-native";
-import { router } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useTheme } from "../../context/ThemeContext";
 
 const Settings = () => {
+  const router = useRouter();
   const { isDarkMode, toggleDarkMode, theme } = useTheme();
   const [notification, setNotification] = useState(true);
 
-  const handleAbout = () => {
-    Alert.alert(
-      "Smart Survey App",
-      "Version 1.0.0\n\nDeveloped using React Native Expo SDK 54."
-    );
-  };
-
-  const handleLogout = () => {
-    Alert.alert(
-      "Logout",
-      "Are you sure you want to logout?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Logout",
-          onPress: () => router.replace("/login"),
-        },
-      ]
-    );
-  };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <ScrollView
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+      contentContainerStyle={styles.contentContainer}
+    >
       <Text style={[styles.heading, { color: theme.colors.text }]}>Settings</Text>
 
-      <View style={[styles.card, { backgroundColor: theme.colors.card }]}>
-        <Text style={[styles.text, { color: theme.colors.text }]}>Dark Mode</Text>
+      <Text style={[styles.sectionHeading, { color: theme.colors.text }]}>Preferences</Text>
+
+      {/* Dark Mode */}
+      <View style={[styles.card, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+        <View style={styles.cardLeft}>
+          <View style={[styles.iconBox, { backgroundColor: isDarkMode ? "rgba(245, 158, 11, 0.2)" : theme.colors.primaryLight }]}>
+            <Ionicons
+              name={isDarkMode ? "moon" : "sunny"}
+              size={20}
+              color={isDarkMode ? "#F59E0B" : theme.colors.primary}
+            />
+          </View>
+          <Text style={[styles.text, { color: theme.colors.text }]}>Dark Mode</Text>
+        </View>
 
         <Switch
           value={isDarkMode}
           onValueChange={toggleDarkMode}
-          trackColor={{ false: "#767577", true: theme.colors.primary }}
-          thumbColor={isDarkMode ? "#FFFFFF" : "#f4f3f4"}
+          trackColor={{ false: "#CBD5E1", true: theme.colors.primary }}
+          thumbColor={isDarkMode ? "#FFFFFF" : "#F8FAFC"}
         />
       </View>
 
-      <View style={[styles.card, { backgroundColor: theme.colors.card }]}>
-        <Text style={[styles.text, { color: theme.colors.text }]}>Notifications</Text>
+      {/* Notifications */}
+      <View style={[styles.card, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+        <View style={styles.cardLeft}>
+          <View style={[styles.iconBox, { backgroundColor: theme.colors.successLight }]}>
+            <Ionicons name="notifications" size={20} color={theme.colors.success} />
+          </View>
+          <Text style={[styles.text, { color: theme.colors.text }]}>Notifications</Text>
+        </View>
 
         <Switch
           value={notification}
           onValueChange={setNotification}
-          trackColor={{ false: "#767577", true: theme.colors.primary }}
+          trackColor={{ false: "#CBD5E1", true: theme.colors.primary }}
+          thumbColor={notification ? "#FFFFFF" : "#F8FAFC"}
         />
       </View>
 
-      <TouchableOpacity
-        style={[styles.card, { backgroundColor: theme.colors.card }]}
-        onPress={handleAbout}
-      >
-        <Text style={[styles.text, { color: theme.colors.text }]}>About App</Text>
-      </TouchableOpacity>
+      <Text style={[styles.sectionHeading, { color: theme.colors.text, marginTop: 14 }]}>About</Text>
 
-      <View style={[styles.card, { backgroundColor: theme.colors.card }]}>
-        <Text style={[styles.text, { color: theme.colors.text }]}>
-          App Version : 1.0.0
-        </Text>
+
+
+      {/* Version Card */}
+      <View style={[styles.card, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+        <View style={styles.cardLeft}>
+          <View style={[styles.iconBox, { backgroundColor: "rgba(100, 116, 139, 0.1)" }]}>
+            <Ionicons name="code-working" size={20} color={theme.colors.subtext} />
+          </View>
+          <View>
+            <Text style={[styles.text, { color: theme.colors.text }]}>App Version</Text>
+            <Text style={[styles.subText, { color: theme.colors.subtext }]}>1.0.0 (Expo SDK 54)</Text>
+          </View>
+        </View>
       </View>
 
+      {/* Log Out Button */}
       <TouchableOpacity
-        style={styles.logoutButton}
-        onPress={handleLogout}
+        style={[
+          styles.card,
+          {
+            backgroundColor: theme.colors.card,
+            borderColor: theme.colors.dangerLight || theme.colors.border,
+            marginTop: 10,
+          },
+        ]}
+        activeOpacity={0.7}
+        onPress={() => router.replace("/login")}
       >
-        <Text style={styles.logoutText}>
-          Logout
-        </Text>
+        <View style={styles.cardLeft}>
+          <View style={[styles.iconBox, { backgroundColor: theme.colors.dangerLight || "rgba(239, 68, 68, 0.15)" }]}>
+            <Ionicons name="log-out" size={20} color={theme.colors.danger || "#EF4444"} />
+          </View>
+          <Text style={[styles.text, { color: theme.colors.danger || "#EF4444", fontWeight: "700" }]}>
+            Log Out
+          </Text>
+        </View>
+        <Ionicons name="chevron-forward" size={18} color={theme.colors.subtext} />
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -93,42 +113,51 @@ export default Settings;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
   },
-
+  contentContainer: {
+    padding: 20,
+    paddingTop: 40,
+    paddingBottom: 40,
+  },
   heading: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 25,
+    marginBottom: 20,
   },
-
+  sectionHeading: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 12,
+  },
   card: {
-    padding: 18,
-    borderRadius: 12,
-    marginBottom: 15,
-    elevation: 2,
+    padding: 16,
+    borderRadius: 14,
+    borderWidth: 1,
+    marginBottom: 12,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    elevation: 2,
   },
-
-  text: {
-    fontSize: 18,
-    fontWeight: "500",
+  cardLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
   },
-
-  logoutButton: {
-    backgroundColor: "#EF4444",
-    padding: 15,
-    borderRadius: 10,
-    marginTop: 30,
+  iconBox: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    justifyContent: "center",
     alignItems: "center",
   },
-
-  logoutText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
+  text: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  subText: {
+    fontSize: 12,
+    marginTop: 2,
   },
 });

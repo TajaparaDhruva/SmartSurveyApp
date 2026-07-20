@@ -1,50 +1,111 @@
-# Welcome to your Expo app 👋
+# 📋 Smart Survey App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A modern, feature-rich cross-platform survey management and mobile hardware utility application built using **React Native**, **Expo SDK 54**, and **Expo Router**.
 
-## Get started
+Repository: [https://github.com/TajaparaDhruva/SmartSurveyApp.git](https://github.com/TajaparaDhruva/SmartSurveyApp.git)
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## ✨ Features & Highlights
 
-2. Start the app
+### 📱 Core Pages & Navigation
+- **Custom Teal Drawer Navigation**: Custom branded side drawer menu featuring category headers (`CORE PAGES`, `HARDWARE UTILITIES`), rounded active item pills, profile cover banner, and quick settings access.
+- **Interactive Dashboard**: Survey statistics, quick action shortcuts, recent survey history, and survey management overview.
+- **Survey Creator**: Multi-field survey form with priority selectors, category tagging, date pickers, and dynamic survey submission.
+- **Survey History & Filtering**: Searchable survey records with status filter tabs (*All*, *Completed*, *Pending*, *In Progress*), detailed view modals, and deletion actions.
 
-   ```bash
-   npx expo start
-   ```
+### 🛠️ Hardware Utilities
+- **Camera Capture**: High-quality camera viewfinder integration, flash toggle, camera flipping (front/back), image preview modal, and photo gallery saving.
+- **Contacts Integration**: Import contacts, quick search filtering, phone number copying with haptic/alert feedback, and contact permission handler.
+- **GPS Mapping**: Real-time geolocation detection, latitude/longitude display, accuracy rating, address geocoding, and interactive map preview link.
+- **Clipboard Actions**: Read & write system clipboard data, quick note pasting, and toast feedback.
 
-In the output, you'll find options to open the app in a
+### 👤 Profile & Authentication
+- **User Authentication**: Modern Login & Sign Up screen with show/hide password toggle, remember me checkbox, and input focus outline fixes.
+- **Profile Management**: Profile page displaying student credentials (**Dhruva Tajapara** / **Student ID: 892**), active online status badge, email, phone, and department info.
+- **Interactive Modals**: Fully functional **Edit Profile** and **Change Password** modals with live updates, validation, and toast notifications.
+- **Log Out Action**: One-tap sign out routing back to the authentication page.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 🎨 Design & Theme System
+- **Dynamic Light & Dark Theme**: Built-in `ThemeContext` supporting seamless dark mode toggling and crisp color palettes (*Nordic Teal & Cyan*).
+- **Polished Mobile & Web UI**: Universal responsive layout built with clean typography, card elevations, smooth transitions, and zero default browser focus outlines.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 📁 Project Structure
 
-When you're ready, run:
-
-```bash
-npm run reset-project
+```text
+02SmartSurveyApp/
+├── app/
+│   ├── (drawer)/
+│   │   ├── (tabs)/
+│   │   │   ├── index.jsx        # Dashboard Screen
+│   │   │   ├── survey.jsx       # New Survey Form
+│   │   │   ├── history.jsx      # Survey History
+│   │   │   ├── profile.jsx      # User Profile Screen
+│   │   │   └── _layout.jsx      # Bottom Tabs Layout
+│   │   ├── camera.jsx           # Camera Capture Utility
+│   │   ├── contacts.jsx         # Contacts Integration
+│   │   ├── location.jsx         # GPS Location Mapping
+│   │   ├── clipboard.jsx        # Clipboard Utility
+│   │   ├── settings.jsx         # App Settings & Preferences
+│   │   └── _layout.jsx          # Drawer Navigation Layout
+│   ├── login.jsx                # Login / Authentication Screen
+│   ├── index.jsx                # Entry Redirect Route
+│   └── _layout.jsx              # Root Stack Layout
+├── components/
+│   └── CustomDrawerContent.jsx  # Custom Dark Teal Drawer Menu
+├── context/
+│   ├── SurveyContext.jsx        # Global Survey State Management
+│   └── ThemeContext.jsx         # Light & Dark Theme System
+├── package.json
+└── README.md
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## 🚀 Getting Started
 
-To learn more about developing your project with Expo, look at the following resources:
+### 1. Prerequisites
+- Node.js (v18 or higher)
+- Expo Go app on mobile (Android/iOS) or Android Studio / Xcode for emulators.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### 2. Installation
+Clone the repository and install project dependencies:
 
-## Join the community
+```bash
+git clone https://github.com/TajaparaDhruva/SmartSurveyApp.git
+cd SmartSurveyApp
+npm install
+```
 
-Join our community of developers creating universal apps.
+### 3. Run the App
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Start the Expo development server:
+
+```bash
+npx expo start
+```
+
+Press:
+- `a` to run on **Android Emulator**
+- `i` to run on **iOS Simulator**
+- `w` to run on **Web Browser**
+
+---
+
+## 🛠️ Technology Stack
+
+- **Framework**: React Native, Expo SDK 54
+- **Routing**: Expo Router v6 (File-based navigation with Drawer & Tabs)
+- **Icons**: Expo Vector Icons (Ionicons)
+- **State Management**: React Context API (`SurveyContext`, `ThemeContext`)
+- **Modules**: `expo-camera`, `expo-location`, `expo-contacts`, `expo-clipboard`
+
+---
+
+## 👤 Author
+
+**Dhruva Tajapara**
+- GitHub: [@TajaparaDhruva](https://github.com/TajaparaDhruva)
+- Project Repo: [SmartSurveyApp](https://github.com/TajaparaDhruva/SmartSurveyApp)

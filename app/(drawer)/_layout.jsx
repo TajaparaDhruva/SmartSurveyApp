@@ -1,78 +1,68 @@
 import { Drawer } from "expo-router/drawer";
-import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../../context/ThemeContext";
+import CustomDrawerContent from "../../components/CustomDrawerContent";
 
 export default function DrawerLayout() {
   const { theme } = useTheme();
 
   return (
     <Drawer
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerShown: true,
         headerStyle: {
           backgroundColor: theme.colors.card,
+          elevation: 2,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.05,
+          shadowRadius: 4,
         },
-        headerTintColor: theme.colors.text,
+        headerTitleStyle: {
+          fontWeight: "bold",
+          fontSize: 18,
+          color: theme.colors.text,
+        },
+        headerTintColor: theme.colors.primary,
         drawerStyle: {
-          backgroundColor: theme.colors.card,
-          width: 260,
-        },
-        drawerActiveTintColor: theme.colors.primary,
-        drawerInactiveTintColor: theme.colors.text,
-        drawerLabelStyle: {
-          fontSize: 16,
-          fontWeight: "600",
+          backgroundColor: theme.dark ? theme.colors.background : theme.colors.card,
+          width: 285,
         },
       }}
     >
       <Drawer.Screen
         name="(tabs)"
         options={{
-          title: "Home",
+          title: "Dashboard",
           headerShown: false,
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
-          ),
         }}
       />
 
       <Drawer.Screen
         name="camera"
         options={{
-          title: "Camera",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="camera" size={size} color={color} />
-          ),
+          title: "Camera Capture",
         }}
       />
 
       <Drawer.Screen
         name="contacts"
         options={{
-          title: "Contacts",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="people" size={size} color={color} />
-          ),
+          title: "Contacts Integration",
         }}
       />
 
       <Drawer.Screen
         name="location"
         options={{
-          title: "Location",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="location" size={size} color={color} />
-          ),
+          title: "GPS Mapping",
         }}
       />
 
       <Drawer.Screen
         name="clipboard"
         options={{
-          title: "Clipboard",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="clipboard" size={size} color={color} />
-          ),
+          title: "Clipboard Actions",
         }}
       />
 
@@ -80,9 +70,6 @@ export default function DrawerLayout() {
         name="settings"
         options={{
           title: "Settings",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="settings" size={size} color={color} />
-          ),
         }}
       />
     </Drawer>
