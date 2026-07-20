@@ -2,7 +2,6 @@
 
 A modern, feature-rich cross-platform survey management and mobile hardware utility application built using **React Native**, **Expo SDK 54**, and **Expo Router**.
 
-Repository: [https://github.com/TajaparaDhruva/SmartSurveyApp.git](https://github.com/TajaparaDhruva/SmartSurveyApp.git)
 
 ---
 
@@ -104,8 +103,3 @@ Press:
 
 ---
 
-## 👤 Author
-
-**Dhruva Tajapara**
-- GitHub: [@TajaparaDhruva](https://github.com/TajaparaDhruva)
-- Project Repo: [SmartSurveyApp](https://github.com/TajaparaDhruva/SmartSurveyApp)
